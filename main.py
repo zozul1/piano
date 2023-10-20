@@ -83,6 +83,7 @@ def draw_piano_keys():
         else:
             pygame.draw.rect(screen, color, (x, 0, key_width, key_height // 2))
 
+
 # Цикл программы
 clock = pygame.time.Clock()
 running = True
@@ -130,9 +131,13 @@ while running:
                 black_key_states[event.key] = True
         elif event.type == pygame.KEYUP:
             if event.key in white_key_states:
-                screen.fill(white)
-                draw_piano_keys()
-                pygame.display.flip()
-                clock.tick(60)
+                white_key_states[event.key] = False
+            elif event.key in black_key_states:
+                black_key_states[event.key] = False
+
+    screen.fill(white)
+    draw_piano_keys()
+    pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
