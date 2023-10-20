@@ -83,6 +83,49 @@ def draw_piano_keys():
         else:
             pygame.draw.rect(screen, color, (x, 0, key_width, key_height // 2))
 
+# Буквы на клавишах
+def draw_piano_keys():
+    key_width = screen_width // 10
+    key_height = screen_height
+
+    white_key_colors = [white] * 7
+    black_key_colors = [black] * 5
+
+    key_mapping = {
+        pygame.K_a: 0,
+        pygame.K_s: 1,
+        pygame.K_d: 2,
+        pygame.K_f: 3,
+        pygame.K_g: 4,
+        pygame.K_h: 5,
+        pygame.K_j: 6
+    }
+
+    text_vertical_offset = 20
+
+    for key, index in key_mapping.items():
+        x = index * key_width
+        if white_key_states.get(key, False):
+            pygame.draw.rect(screen, white_pressed_color, (x, 0, key_width, key_height))
+        else:
+            pygame.draw.rect(screen, white_key_colors[index], (x, 0, key_width, key_height))
+        font = pygame.font.Font(None, 36)
+        label = chr(key)
+        text = font.render(label, True, black)
+        text_rect = text.get_rect(center=(x + key_width // 2, key_height // 2 + text_vertical_offset))
+        screen.blit(text, text_rect)
+
+    for i, label in enumerate(["W", "E", "T", "Y", "U"]):
+        x = i * key_width * 2 + key_width
+        key = pygame.K_w + i * 2
+        if black_key_states.get(key, False):
+            pygame.draw.rect(screen, black_pressed_color, (x, 0, key_width, key_height // 2))
+        else:
+            pygame.draw.rect(screen, black_key_colors[i], (x, 0, key_width, key_height // 2))
+        font = pygame.font.Font(None, 36)
+        text = font.render(label, True, white)
+        text_rect = text.get_rect(center=(x + key_width // 2, key_height // 4 + text_vertical_offset))
+        screen.blit(text, text_rect)
 
 # Цикл программы
 clock = pygame.time.Clock()
